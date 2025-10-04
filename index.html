@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hypixel SkyBlock Fishing Profit Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="hero__content">
+          <h1 class="hero__title">Hypixel SkyBlock Fishing Profit Lab</h1>
+          <p class="hero__subtitle">
+            Craft the perfect fishing session with real-time profit estimates,
+            market-aware fish data, and tailored gear recommendations.
+          </p>
+          <div class="hero__cta">
+            <a href="#calculator" class="btn btn--primary">Start Calculating</a>
+            <a href="#database" class="btn btn--secondary">Explore Fish Database</a>
+          </div>
+        </div>
+        <div class="hero__glow"></div>
+      </header>
+
+      <main class="main">
+        <section id="overview" class="panel panel--glass">
+          <h2 class="panel__title">Fishing Session Snapshot</h2>
+          <div class="stats">
+            <div class="stat">
+              <p class="stat__label">Top Location</p>
+              <p class="stat__value" id="stat-top-location">-</p>
+            </div>
+            <div class="stat">
+              <p class="stat__label">Best Gear Combo</p>
+              <p class="stat__value" id="stat-top-gear">-</p>
+            </div>
+            <div class="stat">
+              <p class="stat__label">Projected Profit / hr</p>
+              <p class="stat__value" id="stat-top-profit">-</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="calculator" class="panel panel--glass">
+          <div class="panel__header">
+            <h2 class="panel__title">Interactive Profit Calculator</h2>
+            <p class="panel__subtitle">
+              Adjust your fishing parameters to see live profit projections based
+              on Hypixel SkyBlock market values.
+            </p>
+          </div>
+
+          <form class="form" id="profit-form">
+            <div class="form__grid">
+              <label class="field">
+                <span class="field__label">Fishing Location</span>
+                <select id="location-select" class="select"></select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Rod</span>
+                <select id="rod-select" class="select"></select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Armor Set</span>
+                <select id="armor-select" class="select"></select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Pet</span>
+                <select id="pet-select" class="select"></select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Fishing Skill Level</span>
+                <input
+                  id="skill-level"
+                  type="range"
+                  min="0"
+                  max="50"
+                  value="25"
+                />
+                <span class="field__value" id="skill-value">25</span>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Session Length (hours)</span>
+                <input
+                  id="session-length"
+                  class="input"
+                  type="number"
+                  min="0.5"
+                  max="24"
+                  step="0.5"
+                  value="1.0"
+                />
+              </label>
+
+              <label class="field field--toggle">
+                <span class="field__label">Include Festival Buff</span>
+                <input id="festival-toggle" type="checkbox" />
+              </label>
+
+              <label class="field field--toggle">
+                <span class="field__label">Double Hook Hot Pot</span>
+                <input id="double-hook-toggle" type="checkbox" />
+              </label>
+            </div>
+          </form>
+
+          <div class="results" id="results">
+            <div class="results__overview">
+              <h3>Profit Projection</h3>
+              <div class="results__metrics">
+                <div class="metric">
+                  <span class="metric__label">Profit per hour</span>
+                  <span class="metric__value" id="profit-hour">-</span>
+                </div>
+                <div class="metric">
+                  <span class="metric__label">Total Session Profit</span>
+                  <span class="metric__value" id="profit-session">-</span>
+                </div>
+                <div class="metric">
+                  <span class="metric__label">Fish per hour</span>
+                  <span class="metric__value" id="fish-hour">-</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="results__breakdown">
+              <h3>Per-Fish Breakdown</h3>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Fish</th>
+                    <th>Catch %</th>
+                    <th>Qty / hr</th>
+                    <th>Price</th>
+                    <th>Profit / hr</th>
+                  </tr>
+                </thead>
+                <tbody id="breakdown-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="database" class="panel panel--glass">
+          <div class="panel__header">
+            <h2 class="panel__title">Fish Market Database</h2>
+            <p class="panel__subtitle">
+              Quickly scan Hypixel fish, edit their market values, and instantly
+              see how the changes impact profits.
+            </p>
+          </div>
+
+          <div class="database">
+            <label class="field database__search">
+              <span class="field__label">Search fish</span>
+              <input id="fish-search" class="input" type="search" placeholder="Ammonite, Prismarine Fish..." />
+            </label>
+
+            <table class="table table--database">
+              <thead>
+                <tr>
+                  <th>Fish</th>
+                  <th>Rarity</th>
+                  <th>Type</th>
+                  <th>Market Price</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="fish-table"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="locations" class="panel panel--glass">
+          <div class="panel__header">
+            <h2 class="panel__title">Location Profit Comparison</h2>
+            <p class="panel__subtitle">
+              Evaluate hotspots across SkyBlock with automatic profitability
+              forecasts using your selected gear.
+            </p>
+          </div>
+
+          <div class="location-comparison" id="location-comparison"></div>
+        </section>
+
+        <section id="equipment" class="panel panel--glass">
+          <div class="panel__header">
+            <h2 class="panel__title">Equipment Optimizer</h2>
+            <p class="panel__subtitle">
+              Discover the most profitable rods, armor, and pets for each
+              fishing spot. Tailored to your fishing skill and buffs.
+            </p>
+          </div>
+
+          <div class="optimizer">
+            <label class="field">
+              <span class="field__label">Choose a Location</span>
+              <select id="optimizer-location" class="select"></select>
+            </label>
+
+            <div class="optimizer__cards" id="optimizer-cards"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>
+          Data inspired by the Hypixel SkyBlock community. Adjust market prices
+          regularly to keep profit projections accurate.
+        </p>
+        <p>Built with love for the deep blue grind.</p>
+      </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
